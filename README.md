@@ -1,2 +1,3 @@
 # CS5524_Project
-CS5224 Where to go
+CS5224 Final Project
+Sightseeing Go Where
