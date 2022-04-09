@@ -93,7 +93,7 @@ def _get_pm25_by_coordinate(la,lo):
     loc_lo = loc['label_location']['longitude']
     coods[name] = [loc_la,loc_lo]
 
-  print(values)
+  # print(values)
   # print(coods)
   best_key = _find_closest_cood(la, lo, coods)
   return values[best_key], update_timestamp

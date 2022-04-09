@@ -1,11 +1,45 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+import api_loader
 
-def map(request):
-    return render(request, 'base/map.html')
+def parse_time(time_stamp):
+    hour, min, _, _ = time_stamp.split('T')[1].split(':')
+    return hour, min
+
+# def map(request):
+#     return render(request, 'base/map.html')
 
 def weather(request):
-    context = {}
+    la, lo = 1.3135,103.9625
+    # temperature
+    api_reader = api_loader._get_air_temp_by_coordinate(la, lo)
+    temperature = api_reader[0]
+    temperature_update_hour, temperature_update_min = parse_time(api_reader[1])
+    # uv
+    api_reader = api_loader._get_uv()
+    uv = api_reader[0]
+    uv_update_hour, uv_update_min = parse_time(api_reader[1])
+
+    # pm2.5
+    api_reader = api_loader._get_pm25_by_coordinate(la, lo)
+    pm25 = api_reader[0]
+    pm25_update_hour, pm25_update_min = parse_time(api_reader[1])
+
+    
+    pollutant = api_loader._get_pollutant_standard(la, lo)
+
+    context = {'temperature': temperature,
+                'temperature_update_hour': temperature_update_hour,
+                'temperature_update_min': temperature_update_min,
+                'uv': uv,
+                'uv_update_hour': uv_update_hour,
+                'uv_update_min': uv_update_min,
+                'pm25': pm25,
+                'pm25_update_hour': pm25_update_hour,
+                'pm25_update_min': pm25_update_min,
+                
+                
+                'pollutant': pollutant}
     return render(request, 'base/weather.html', context)
 
 def stores(request):
@@ -20,9 +54,10 @@ def test(request):
     return HttpResponse('See details in terminal')
 
 def home(request):
-    service_name = ['Select Place', 'Travel Helper', 'Spot Places']
-    service_url_name = ['map', 'weather', 'stores']
-    context = {'service_name': service_name,
-                'service_url_name': service_url_name,}
+    # service_name = ['Select Place', 'Travel Helper', 'Spot Places']
+    # service_url_name = ['map', 'weather', 'stores']
+    # context = {'service_name': service_name,
+    #             'service_url_name': service_url_name,}
+    context = {}
     return render(request, 'base/home.html', context)
 

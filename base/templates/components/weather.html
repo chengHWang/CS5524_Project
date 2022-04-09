@@ -1,0 +1,57 @@
+<div class="roomListRoom"">
+    <div class=" roomListRoom__header">
+        <div>
+            <h2>Temperature: &nbsp{{temperature}} &#8451</h2>
+        </div>
+
+        <div class="roomListRoom__actions">
+            <span>updated at {{temperature_update_hour}}:{{temperature_update_min}}</span>
+        </div>
+    </div>
+
+    {% if temperature <= 15 %}
+    <p>Suggestions: It's cold outside, put on more clothes.</p>
+    {% elif temperature <= 28 %}
+        <p>Suggestions: It's cozy outside, enjoy your day!</p>
+    {%elif temperature > 28 %}
+        <p>Suggestions: It's really hot outside!</p>
+    {%endif%}
+</div>
+
+<div class="roomListRoom"">
+    <div class=" roomListRoom__header">
+        <div>
+            <h2>PM2.5 level: &nbsp{{pm25}} μg/m³</h2>
+        </div>
+        <div class="roomListRoom__actions">
+            <span>updated at {{pm25_update_hour}}:{{pm25_update_min}}</span>
+        </div>
+    </div>  
+
+    {%if pm25 <= 12%}
+        <p>Suggestions: low PM2.5 level, go out and enjoy fresh air!</p>
+    {%elif pm25 <= 35%}
+        <p>Suggestions: unhealthy PM2.5 level, spend more time indoor.</p>
+    {%elif pm25 >= 35%}
+        <p>Suggestions: severe PM2.5 level, long time exposure leads to serious health issues.</p>
+    {%endif%}
+</div>
+
+<div class="roomListRoom"">
+    <div class=" roomListRoom__header">
+        <div>
+            <h2>UV (ultraviolet) index: &nbsp{{uv}}</h2>
+        </div>
+        <div class="roomListRoom__actions">
+            <span>updated at {{uv_update_hour}}:{{uv_update_min}}</span>
+        </div>
+    </div>  
+
+    {% if uv <= 2 %}
+        <p>Suggestions: low UV level, go out and enjoy your day!</p>
+    {% elif uv <= 4 %}
+        <p>Suggestions: moderate UV level, put some sunscreen on.</p>
+    {% elif uv >= 8 %}
+        <p>Suggestions: high UV level, spend more time indoor.</p>
+    {%endif%}
+</div>
