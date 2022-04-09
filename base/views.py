@@ -1,0 +1,12 @@
+from django.shortcuts import render
+from django.http import HttpResponse
+
+# Create your views here.
+def base(request):
+    return HttpResponse('Home page of base, the input url is /base/')
+
+def map(request):
+    return render(request, 'base/map.html')
+
+def test(request):
+    return HttpResponse('Test')
