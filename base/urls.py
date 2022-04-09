@@ -6,7 +6,7 @@ from . import views
 urlpatterns = [
     path('',views.base),
     path('map/',views.map),
-    path('map/#?',views.test)
+    path('test/',views.test)
 ]
 
 # urlpatterns += staticfiles_urlpatterns()
