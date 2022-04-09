@@ -10,12 +10,14 @@ Original file is located at
 import requests
 import math
 
-api_carpark_availability = 'https://api.data.gov.sg/v1/transport/carpark-availability'  # This dataset doesn't contain the coods of carpark
 api_pollutant_standard = 'https://api.data.gov.sg/v1/environment/psi'
 api_air_temperature = 'https://api.data.gov.sg/v1/environment/air-temperature'
 api_ultra_violet = 'https://api.data.gov.sg/v1/environment/uv-index'
 api_pm25 = 'https://api.data.gov.sg/v1/environment/pm25'
-apiList = [api_carpark_availability, api_pollutant_standard, api_air_temperature, api_ultra_violet, api_pm25]
+
+api_forecast = 'https://api.data.gov.sg/v1/environment/2-hour-weather-forecast'
+
+apiList = [api_pollutant_standard, api_air_temperature, api_ultra_violet, api_pm25, api_forecast]
 
 def _check_api_availability():
   ava = True
@@ -70,13 +72,6 @@ def _get_pollutant_standard(la,lo):
 
 # _get_pollutant_standard(1.35735,103.94)
 
-def _get_carpark():
-  response = requests.get(api_carpark_availability)
-  temp = response.json()['items'][0]
-  print(type(temp))
-  print(temp.keys())
-
-# _get_carpark()
 
 def _get_pm25_by_coordinate(la,lo):
   # print(la, lo)
@@ -139,3 +134,30 @@ def _get_air_temp_by_coordinate(la,lo):
   return values[best_key], timestamp
 
 # _get_air_temp_by_coordinate(1.3135,103.9625)
+
+def _get_weather_forecast_by_coordinate(la,lo):
+  response = requests.get(api_forecast)
+  area_metadata = response.json()['area_metadata']
+
+  coods = {}
+  for area in area_metadata:
+    name = area['name']
+    area_la = area['label_location']['latitude']
+    area_lo = area['label_location']['longitude']
+    coods[name] = [area_la, area_lo]
+  # print(coods)
+
+  best_key = _find_closest_cood(la, lo, coods)
+  # print(best_key)
+
+  items = response.json()['items'][0]
+  update_timestamp = items['update_timestamp']
+  valid_period_start = items['valid_period']['start']
+  valid_period_end = items['valid_period']['end']
+  forecasts = items['forecasts']
+
+  for forecast in forecasts:
+    if forecast['area'] == best_key:
+      output = forecast['forecast']
+
+  return output, update_timestamp, valid_period_start, valid_period_end

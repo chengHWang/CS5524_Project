@@ -1,16 +1,33 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib import messages
 import api_loader
 
 def parse_time(time_stamp):
     hour, min, _, _ = time_stamp.split('T')[1].split(':')
     return hour, min
 
-# def map(request):
-#     return render(request, 'base/map.html')
 
 def weather(request):
-    la, lo = 1.3135,103.9625
+    try:
+        cood = list(request.GET.keys())[0].split(',')
+        cood_x = int(cood[0])
+        cood_y = int(cood[1])
+        # print(cood_x,cood_y)
+    except:
+        cood_x = 360
+        cood_y = 230
+
+    top_la = 1.493
+    bot_la = 1.1616
+    left_lo = 103.590
+    right_lo = 104.115
+
+    la = top_la - (top_la-bot_la)*(cood_y/460)
+    lo = left_lo + (right_lo-left_lo)*(cood_x/720)
+    print(f'{cood_x,cood_y} --> {round(lo,4), round(la,4)}')
+
+
     # temperature
     api_reader = api_loader._get_air_temp_by_coordinate(la, lo)
     temperature = api_reader[0]
@@ -25,7 +42,7 @@ def weather(request):
     pm25 = api_reader[0]
     pm25_update_hour, pm25_update_min = parse_time(api_reader[1])
 
-    
+
     pollutant = api_loader._get_pollutant_standard(la, lo)
 
     context = {'temperature': temperature,
@@ -37,21 +54,16 @@ def weather(request):
                 'pm25': pm25,
                 'pm25_update_hour': pm25_update_hour,
                 'pm25_update_min': pm25_update_min,
-                
-                
+
+
                 'pollutant': pollutant}
     return render(request, 'base/weather.html', context)
+
 
 def stores(request):
     context = {}
     return render(request, 'base/stores.html', context)
 
-def test(request):
-    cood = list(request.GET.keys())[0].split(',')
-    cood_x = int(cood[0])
-    cood_y = int(cood[1])
-    print(cood_x,cood_y)
-    return HttpResponse('See details in terminal')
 
 def home(request):
     # service_name = ['Select Place', 'Travel Helper', 'Spot Places']
@@ -61,3 +73,6 @@ def home(request):
     context = {}
     return render(request, 'base/home.html', context)
 
+def message(request):
+    messages.info(request, 'Your password has been changed successfully!')
+    return HttpResponse('Message')
