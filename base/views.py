@@ -1,12 +1,16 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-# Create your views here.
-def base(request):
-    return HttpResponse('Home page of base, the input url is /base/')
-
 def map(request):
     return render(request, 'base/map.html')
+
+def weather(request):
+    context = {}
+    return render(request, 'base/weather.html', context)
+
+def stores(request):
+    context = {}
+    return render(request, 'base/stores.html', context)
 
 def test(request):
     cood = list(request.GET.keys())[0].split(',')
@@ -14,3 +18,11 @@ def test(request):
     cood_y = int(cood[1])
     print(cood_x,cood_y)
     return HttpResponse('See details in terminal')
+
+def home(request):
+    service_name = ['Select Place', 'Travel Helper', 'Spot Places']
+    service_url_name = ['map', 'weather', 'stores']
+    context = {'service_name': service_name,
+                'service_url_name': service_url_name,}
+    return render(request, 'base/home.html', context)
+

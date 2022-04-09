@@ -1,0 +1,30 @@
+{%extends 'main.html' %}
+{%block content%}
+
+<style>
+    .home-container {
+        display: grid;
+        grid-template-columns: 1fr 4fr 1fr;
+    }
+</style>
+
+
+<div class="home-container">
+    <div class="container">
+        {%include 'components/services.html'%}
+    </div>
+
+    <div class="container">
+        <br>
+        <h2>Seleect Placese of interest:</h2>
+        <br>
+        {%include 'components/map.html'%}
+    </div>
+
+    <div class="container">
+    </div>
+
+</div>
+
+
+{%endblock content%}
