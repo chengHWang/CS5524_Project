@@ -157,3 +157,30 @@ def _get_weather_forecast_by_coordinate(la,lo):
     if forecast['area'] == best_key:
       output = forecast['forecast']
   return output, update_timestamp, valid_period_start, valid_period_end
+
+def _get_nearby_business(la,lo):
+  url1 = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
+  url2 = '?keyword=cruise&radius=2000&type=restaurant&key=AIzaSyAMvwkpYIeBB9rVq7q9_bB0jMbXIHgU4qc'
+  url3 = '&location='+str(la)+'%2C'+str(lo)
+
+  url = url1 + url2 + url3
+  # print(url)
+  response = requests.request("GET", url, headers={}, data={})
+  results = response.json()['results']
+  # print(results)
+
+  info = []
+  for result in results:
+    la = result['geometry']['location']['lat']
+    lo = result['geometry']['location']['lng']
+    name = result['name']
+    open = result['opening_hours']['open_now']
+    photo_link = result['photos'][0]['html_attributions'][0][9:-13]
+    rating = result['rating']
+
+    info.append([la,lo,name,open,photo_link,rating])
+  return info
+  
+if __name__ == "__main__":
+  info = _get_nearby_business(1.2849426531098649,103.82181815174947)
+  print(info)
