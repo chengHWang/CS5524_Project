@@ -11,10 +11,12 @@
                 <li>
                     <a href="{%url 'weather' curr_la curr_lo%}", style="text-indent: 20px;">Travel Helper</a>
                 </li>
+                {%if request.user.is_authenticated%}
                 <li>
                     <a href="{%url 'stores' curr_la curr_lo %}", style="text-indent: 20px;">Spot Places</a>
-                    <p>{{la_lo_key}}</p>
                 </li>
+                {%endif%}
             </ul>
 
 </div>  
+

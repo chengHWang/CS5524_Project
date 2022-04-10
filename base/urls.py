@@ -9,6 +9,10 @@ urlpatterns = [
     path('map/', views.map, name="map"),
     path('weather/<str:la>/<str:lo>', views.weather, name='weather'),
     path('stores/<str:la>/<str:lo>', views.stores, name='stores'),
+
+    path('login/', views.loginPage, name="login"),
+    path('logout/', views.logoutUser, name="logout"),
+    path('register/', views.registerPage, name="register"),
 ]
 
 # urlpatterns += staticfiles_urlpatterns()

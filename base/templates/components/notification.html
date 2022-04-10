@@ -14,6 +14,7 @@
         <li>
             <a style="text-indent: 0px;">5 travel suggestions, check out 「Travel Helper」for more information.</a>
         </li>
+        {%if request.user.is_authenticated%}
         <li>
             {%if number_business > 1%}
             <a style="text-indent: 0px;">{{number_business}} stores nearby, check out 「Spot Places」for more information.</a>
@@ -23,6 +24,17 @@
             <a style="text-indent: 0px;">Found no store nearby, please try another location.</a>
             {%endif%}
         </li>
+        {%else%}
+        <li>
+            {%if number_business > 1%}
+            <a style="text-indent: 0px;">{{number_business}} stores nearby, please register to explore.</a>
+            {%elif number_business == 1%}
+            <a style="text-indent: 0px;">{{number_business}} store nearby, please register to explore.</a>
+            {%else%}
+            <a style="text-indent: 0px;">Found no store nearby, please try another location.</a>
+            {%endif%}
+        </li>
+        {%endif%}
     </ul>
 
 </div>
