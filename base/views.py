@@ -86,8 +86,36 @@ def home(request):
     # service_url_name = ['map', 'weather', 'stores']
     # context = {'service_name': service_name,
     #             'service_url_name': service_url_name,}
+    # context = {'cood_x':cood_x, 'cood_y':cood_y}
     context = {}
     return render(request, 'base/home.html', context)
+
+def map(request):
+    try:
+        cood = list(request.GET.keys())[0].split(',')
+        cood_x = int(cood[0])
+        cood_y = int(cood[1])
+        # print(cood_x,cood_y)
+    except:
+        cood_x = 360
+        cood_y = 230
+
+    top_la = 1.493
+    bot_la = 1.1616
+    left_lo = 103.590
+    right_lo = 104.115
+
+    la = top_la - (top_la-bot_la)*(cood_y/460)
+    lo = left_lo + (right_lo-left_lo)*(cood_x/720)
+    print(f'{cood_x,cood_y} --> {round(lo,4), round(la,4)}')
+    # service_name = ['Select Place', 'Travel Helper', 'Spot Places']
+    # service_url_name = ['map', 'weather', 'stores']
+    # context = {'service_name': service_name,
+    #             'service_url_name': service_url_name,}
+    context = {'cood_x':la, 'cood_y':lo}
+    # context = {"pk": pk}
+    # return render(request, 'base/home.html', context)
+    return render(request, 'base/map.html', context)
 
 def message(request):
     messages.info(request, 'Your password has been changed successfully!')
