@@ -1,0 +1,28 @@
+<div class="topics">
+
+    <div class="topics__header", style="text-indent: 0px;">
+        <h2>Travel Buddy:</h2>
+    </div>
+
+    <ul class="topics__list">
+        <li>
+            <a style="text-indent: 0px;">Current Latitude: {{curr_la}}</a>
+        </li>
+        <li>
+            <a style="text-indent: 0px;">Current Longitude: {{curr_lo}}</a>
+        </li>
+        <li>
+            <a style="text-indent: 0px;">5 travel suggestions, check out 「Travel Helper」for more information.</a>
+        </li>
+        <li>
+            {%if number_business > 1%}
+            <a style="text-indent: 0px;">{{number_business}} stores nearby, check out 「Spot Places」for more information.</a>
+            {%elif number_business == 1%}
+            <a style="text-indent: 0px;">{{number_business}} store nearby, check out 「Spot Places」for more information.</a>
+            {%else%}
+            <a style="text-indent: 0px;">Found no store nearby, please try another location.</a>
+            {%endif%}
+        </li>
+    </ul>
+
+</div>

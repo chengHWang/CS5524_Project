@@ -4,7 +4,7 @@
 <style>
     .home-container {
         display: grid;
-        grid-template-columns: 1fr 4fr 1fr;
+        grid-template-columns: 1fr 3fr 1fr;
     }
 </style>
 
@@ -19,11 +19,10 @@
         <h2>Seleect Placese of Interest:</h2>
         <br>
         {%include 'components/map.html'%}
-        <h1>{{cood_x}}</h1>
-        <h1>{{cood_y}}</h1>
     </div>
 
     <div class="container">
+        {%include 'components/notification.html'%}
     </div>
 
 </div>

@@ -160,7 +160,7 @@ def _get_weather_forecast_by_coordinate(la,lo):
 
 def _get_nearby_business(la,lo):
   url1 = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
-  url2 = '?keyword=cruise&radius=2000&type=restaurant&key=AIzaSyAMvwkpYIeBB9rVq7q9_bB0jMbXIHgU4qc'
+  url2 = '?keyword=cruise&radius=3500&type=restaurant&key=AIzaSyAMvwkpYIeBB9rVq7q9_bB0jMbXIHgU4qc'
   url3 = '&location='+str(la)+'%2C'+str(lo)
 
   url = url1 + url2 + url3
@@ -171,16 +171,39 @@ def _get_nearby_business(la,lo):
 
   info = []
   for result in results:
-    la = result['geometry']['location']['lat']
-    lo = result['geometry']['location']['lng']
+    la = round(float(result['geometry']['location']['lat']), 3)
+    lo = round(float(result['geometry']['location']['lng']), 3)
     name = result['name']
-    open = result['opening_hours']['open_now']
-    photo_link = result['photos'][0]['html_attributions'][0][9:-13]
+    try:
+      is_open = result['opening_hours']['open_now']
+    except:
+      is_open = False
+    try:
+      photo_link = result['photos'][0]['html_attributions'][0].split('"')[1]
+      photos = _get_photos(result['photos'])
+    except:
+      photo_link = ""
+      photos = []
     rating = result['rating']
-
-    info.append([la,lo,name,open,photo_link,rating])
-  return info
   
+    info.append([la,lo,name,is_open,photo_link,rating, photos])
+  return info
+
+def _get_photos(photos):
+    api = "https://maps.googleapis.com/maps/api/place/photo"
+    width = "?maxwidth=400"
+    # photo_ref = "&photo_reference=" + photo_reference
+    photo_ref = []
+    key = "&key=AIzaSyAMvwkpYIeBB9rVq7q9_bB0jMbXIHgU4qc"
+
+    if len(photos) > 2:
+        photos = photos[:2]
+    for photo in photos:
+        photo_ref.append("&photo_reference=" + photo['photo_reference'])
+
+    photo_url = [api + width + ele + key for ele in photo_ref]
+    return photo_url
+
 if __name__ == "__main__":
   info = _get_nearby_business(1.2849426531098649,103.82181815174947)
   print(info)

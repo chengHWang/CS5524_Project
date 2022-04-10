@@ -9,11 +9,12 @@
                     <a href="{%url 'home'%}", style="text-indent: 20px;">Select Place</a>
                 </li>
                 <li>
-                    <a href="{%url 'weather'%}", style="text-indent: 20px;">Travel Helper</a>
+                    <a href="{%url 'weather' curr_la curr_lo%}", style="text-indent: 20px;">Travel Helper</a>
                 </li>
                 <li>
-                    <a href="{%url 'stores'%}", style="text-indent: 20px;">Spot Places</a>
+                    <a href="{%url 'stores' curr_la curr_lo %}", style="text-indent: 20px;">Spot Places</a>
+                    <p>{{la_lo_key}}</p>
                 </li>
             </ul>
 
-</div>
+</div>  

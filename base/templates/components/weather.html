@@ -8,7 +8,7 @@
             <span>updated at {{temperature_update_hour}}:{{temperature_update_min}}</span>
         </div>
     </div>
-
+    <br>
     {% if temperature <= 15 %}
     <p>Suggestions: It's cold outside, put on more clothes.</p>
     {% elif temperature <= 28 %}
@@ -21,13 +21,25 @@
 <div class="roomListRoom"">
     <div class=" roomListRoom__header">
         <div>
+            <h2>Weather Forecast: &nbsp{{forecast}}</h2>
+        </div>
+
+        <div class="roomListRoom__actions">
+            <span>from {{valid_start_hour}}:{{valid_start_min}} to {{valid_end_hour}}:{{valid_end_min}}</span>
+        </div>
+    </div>
+</div>
+
+<div class="roomListRoom"">
+    <div class=" roomListRoom__header">
+        <div>
             <h2>PM2.5 level: &nbsp{{pm25}} μg/m³</h2>
         </div>
         <div class="roomListRoom__actions">
             <span>updated at {{pm25_update_hour}}:{{pm25_update_min}}</span>
         </div>
     </div>  
-
+    <br>
     {%if pm25 <= 12%}
         <p>Suggestions: low PM2.5 level, go out and enjoy fresh air!</p>
     {%elif pm25 <= 35%}
@@ -46,7 +58,7 @@
             <span>updated at {{uv_update_hour}}:{{uv_update_min}}</span>
         </div>
     </div>  
-
+    <br>
     {% if uv <= 2 %}
         <p>Suggestions: low UV level, go out and enjoy your day!</p>
     {% elif uv <= 4 %}
@@ -56,15 +68,22 @@
     {%endif%}
 </div>
 
-
 <div class="roomListRoom"">
     <div class=" roomListRoom__header">
         <div>
-            <h2>Weather Forecast from {{valid_start_hour}}:{{valid_start_min}} to {{valid_end_hour}}:{{valid_end_min}}: &nbsp{{forecast}}</h2>
+            <h2>Pollutants</h2>
         </div>
-
         <div class="roomListRoom__actions">
-            <span>updated at {{forecast_update_timestamp_hour}}:{{forecast_update_timestamp_min}}</span>
+            <span>updated at {{pollutant_update_hour}}:{{pollutant_update_min}}</span>
         </div>
-    </div>
+    </div>  
+        <br>
+        <p style="text-indent: 40px;">PM10 index: {{pm10}}</p>
+        <p style="text-indent: 40px;">SO<sub>2</sub> level: {{so2}}</p>
+        <p style="text-indent: 40px;">NO<sub>2</sub> level: {{no2}}</p>
+        <p style="text-indent: 40px;">CO level: {{co}}</p>
+        <p style="text-indent: 40px;">O<sub>3</sub> level: {{o3}}</p>
+
 </div>
+
+

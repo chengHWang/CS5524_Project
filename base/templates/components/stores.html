@@ -1,0 +1,32 @@
+{%for store in business%}
+<div class="roomListRoom"">
+    <div class=" roomListRoom__header">
+        <div>
+            <a href="{{store.4}}">@{{store.2}}</a>
+        </div>
+
+        <div class="roomListRoom__actions">
+            <span>location: {{store.0}},{{store.1}}</span>
+        </div>
+    </div>
+    <div class=" roomListRoom__header">
+        <div>
+            {%if store.3%}
+            <span>OPENING</span>
+            {%else%}
+            <span>CLOSED</span>
+            {%endif%}
+        </div>
+
+        <div class="roomListRoom__actions">
+            <span>Rating: {{store.5}}</span>
+        </div>
+    </div>
+        <div>
+            {%for photo in store.6%}
+            <img style="width: 300px; height: auto;" src={{photo}}>
+            {%endfor%}
+        </div>
+        
+</div>
+{%endfor%}
