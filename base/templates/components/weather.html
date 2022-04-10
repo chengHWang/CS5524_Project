@@ -55,3 +55,16 @@
         <p>Suggestions: high UV level, spend more time indoor.</p>
     {%endif%}
 </div>
+
+
+<div class="roomListRoom"">
+    <div class=" roomListRoom__header">
+        <div>
+            <h2>Weather Forecast from {{valid_start_hour}}:{{valid_start_min}} to {{valid_end_hour}}:{{valid_end_min}}: &nbsp{{forecast}}</h2>
+        </div>
+
+        <div class="roomListRoom__actions">
+            <span>updated at {{forecast_update_timestamp_hour}}:{{forecast_update_timestamp_min}}</span>
+        </div>
+    </div>
+</div>

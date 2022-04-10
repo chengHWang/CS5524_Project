@@ -36,27 +36,43 @@ def weather(request):
     api_reader = api_loader._get_uv()
     uv = api_reader[0]
     uv_update_hour, uv_update_min = parse_time(api_reader[1])
-
     # pm2.5
     api_reader = api_loader._get_pm25_by_coordinate(la, lo)
     pm25 = api_reader[0]
     pm25_update_hour, pm25_update_min = parse_time(api_reader[1])
-
-
+    # pollutant
     pollutant = api_loader._get_pollutant_standard(la, lo)
+    # forecase
+    forecast, forecast_update_timestamp, valid_start, valid_end = api_loader._get_weather_forecast_by_coordinate(la,lo)
+    forecast_update_timestamp_hour, forecast_update_timestamp_min = parse_time(forecast_update_timestamp)
+    valid_start_hour, valid_start_min = parse_time(valid_start)
+    valid_end_hour, valid_end_min = parse_time(valid_end)
+
+
+
 
     context = {'temperature': temperature,
                 'temperature_update_hour': temperature_update_hour,
                 'temperature_update_min': temperature_update_min,
+
                 'uv': uv,
                 'uv_update_hour': uv_update_hour,
                 'uv_update_min': uv_update_min,
+
                 'pm25': pm25,
                 'pm25_update_hour': pm25_update_hour,
                 'pm25_update_min': pm25_update_min,
 
+                'pollutant': pollutant,
 
-                'pollutant': pollutant}
+                'forecast': forecast,
+                'forecast_update_timestamp_hour': forecast_update_timestamp_hour,
+                'forecast_update_timestamp_min':forecast_update_timestamp_min,
+                'valid_start_hour': valid_start_hour,
+                'valid_start_min':valid_start_min,
+                'valid_end_hour': valid_end_hour,
+                'valid_end_min':valid_end_min,
+               }
     return render(request, 'base/weather.html', context)
 
 

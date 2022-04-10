@@ -14,7 +14,6 @@ api_pollutant_standard = 'https://api.data.gov.sg/v1/environment/psi'
 api_air_temperature = 'https://api.data.gov.sg/v1/environment/air-temperature'
 api_ultra_violet = 'https://api.data.gov.sg/v1/environment/uv-index'
 api_pm25 = 'https://api.data.gov.sg/v1/environment/pm25'
-
 api_forecast = 'https://api.data.gov.sg/v1/environment/2-hour-weather-forecast'
 
 apiList = [api_pollutant_standard, api_air_temperature, api_ultra_violet, api_pm25, api_forecast]
@@ -71,7 +70,6 @@ def _get_pollutant_standard(la,lo):
   return values, update_timestamp
 
 # _get_pollutant_standard(1.35735,103.94)
-
 
 def _get_pm25_by_coordinate(la,lo):
   # print(la, lo)
@@ -138,7 +136,6 @@ def _get_air_temp_by_coordinate(la,lo):
 def _get_weather_forecast_by_coordinate(la,lo):
   response = requests.get(api_forecast)
   area_metadata = response.json()['area_metadata']
-
   coods = {}
   for area in area_metadata:
     name = area['name']
@@ -159,5 +156,4 @@ def _get_weather_forecast_by_coordinate(la,lo):
   for forecast in forecasts:
     if forecast['area'] == best_key:
       output = forecast['forecast']
-
   return output, update_timestamp, valid_period_start, valid_period_end
